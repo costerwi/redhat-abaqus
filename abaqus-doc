@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+# chkconfig: - 91 35
+# description: Starts and stops the abaqus documentation daemon
+#
+
+# Source function library.
+if [ -f /etc/init.d/functions ] ; then
+  . /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ] ; then
+  . /etc/rc.d/init.d/functions
+else
+  exit 1
+fi
+
+# Avoid using root's TMPDIR
+unset TMPDIR
+
+RETVAL=0
+
+start() {
+        KIND="Abaqus doc"
+	echo -n $"Starting $KIND services: "
+	daemon /opt/doc/Documentation/bin/monitor
+	RETVAL=$?
+	echo
+	return $RETVAL
+}	
+
+stop() {
+	KIND="Abaqus doc"
+	echo -n $"Shutting down $KIND services: "
+	killproc monitor.x
+	RETVAL=$?
+	echo
+	return $RETVAL
+}	
+
+restart() {
+	stop
+	start
+}	
+
+
+# Check that we are root ... so non-root users stop here
+[  `id -u` -eq  "0" ] ||  exit 4
+
+
+
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+  	restart
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|restart|reload|status|condrestart}"
+	exit 2
+esac
+
+exit $?

@@ -1,0 +1,93 @@
+#!/bin/sh
+#
+# chkconfig: - 91 35
+# description: Starts and stops the abaqus license daemon
+#
+
+# Source function library.
+if [ -f /etc/init.d/functions ] ; then
+  . /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ] ; then
+  . /etc/rc.d/init.d/functions
+else
+  exit 1
+fi
+
+# Avoid using root's TMPDIR
+unset TMPDIR
+
+LM_LICENSE_FILE=/usr/local/etc/abaqus_license.lic
+BIN=/opt/CAE/SIMULIA/License/2016/linux_a64/code/bin
+
+RETVAL=0
+
+start() {
+        KIND="ABAQUSLM"
+	echo -n $"Starting $KIND services: "
+	$BIN/lmgrd -c $LM_LICENSE_FILE -l +/var/log/abaquslm.log
+	RETVAL=$?
+	echo
+	return $RETVAL
+}	
+
+stop() {
+	KIND="ABAQUSLM"
+	echo -n $"Shutting down $KIND services: "
+	$BIN/lmdown -c $LM_LICENSE_FILE -q
+	RETVAL=$?
+	echo
+	return $RETVAL
+}	
+
+restart() {
+	stop
+	start
+}	
+
+reload() {
+        echo -n $"Reloading $LM_LICENSE_FILE file: "
+	$BIN/lmreread -c $LM_LICENSE_FILE
+	RETVAL=$?
+	echo
+	return $RETVAL
+}	
+
+rhstatus() {
+	$BIN/lmstat -c $LM_LICENSE_FILE
+	return $?
+}	
+
+
+# Allow status as non-root.
+if [ "$1" = status ]; then
+       rhstatus
+       exit $?
+fi
+
+# Check that we are root ... so non-root users stop here
+[  `id -u` -eq  "0" ] ||  exit 4
+
+
+
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+  	restart
+	;;
+  reload)
+  	reload
+	;;
+  status)
+  	rhstatus
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|restart|reload|status}"
+	exit 2
+esac
+
+exit $?
