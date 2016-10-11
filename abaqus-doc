@@ -37,11 +37,6 @@ stop() {
 	return $RETVAL
 }	
 
-restart() {
-	stop
-	start
-}	
-
 
 # Check that we are root ... so non-root users stop here
 [  `id -u` -eq  "0" ] ||  exit 4
@@ -56,7 +51,8 @@ case "$1" in
   	stop
 	;;
   restart)
-  	restart
+  	stop
+	start
 	;;
   *)
 	echo $"Usage: $0 {start|stop|restart|reload|status|condrestart}"

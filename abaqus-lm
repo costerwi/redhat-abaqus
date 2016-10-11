@@ -40,11 +40,6 @@ stop() {
 	return $RETVAL
 }	
 
-restart() {
-	stop
-	start
-}	
-
 reload() {
         echo -n $"Reloading $LM_LICENSE_FILE file: "
 	$BIN/lmreread -c $LM_LICENSE_FILE
@@ -78,7 +73,8 @@ case "$1" in
   	stop
 	;;
   restart)
-  	restart
+  	stop
+	start
 	;;
   reload)
   	reload
