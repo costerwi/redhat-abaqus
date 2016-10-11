@@ -2,6 +2,7 @@
 #
 # chkconfig: - 91 35
 # description: Starts and stops the abaqus license daemon
+# processname: lmgrd
 #
 
 # Source function library.
