@@ -38,12 +38,6 @@ stop() {
 	return $RETVAL
 }	
 
-
-# Check that we are root ... so non-root users stop here
-[  `id -u` -eq  "0" ] ||  exit 4
-
-
-
 case "$1" in
   start)
   	start
