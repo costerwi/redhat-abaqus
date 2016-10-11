@@ -19,11 +19,11 @@ unset TMPDIR
 
 LM_LICENSE_FILE=/usr/local/etc/abaqus_license.lic
 BIN=/opt/CAE/SIMULIA/License/2016/linux_a64/code/bin
+KIND="ABAQUSLM"
 
 RETVAL=0
 
 start() {
-        KIND="ABAQUSLM"
 	echo -n $"Starting $KIND services: "
 	$BIN/lmgrd -c $LM_LICENSE_FILE -l +/var/log/abaqus-lm.log && success $KIND || failure $KIND
 	RETVAL=$?
@@ -32,7 +32,6 @@ start() {
 }	
 
 stop() {
-	KIND="ABAQUSLM"
 	echo -n $"Shutting down $KIND services: "
 	$BIN/lmdown -c $LM_LICENSE_FILE -q
 	RETVAL=$?

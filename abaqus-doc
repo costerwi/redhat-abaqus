@@ -5,6 +5,9 @@
 # processname: monitor.x
 #
 
+BASEDIR=/opt/CAE
+KIND="Abaqus doc"
+
 # Source function library.
 if [ -f /etc/init.d/functions ] ; then
   . /etc/init.d/functions
@@ -20,16 +23,14 @@ unset TMPDIR
 RETVAL=0
 
 start() {
-        KIND="Abaqus doc"
 	echo -n $"Starting $KIND services: "
-	daemon /opt/doc/Documentation/bin/monitor
+	daemon $BASEDIR/Documentation/bin/monitor
 	RETVAL=$?
 	echo
 	return $RETVAL
 }	
 
 stop() {
-	KIND="Abaqus doc"
 	echo -n $"Shutting down $KIND services: "
 	killproc monitor.x
 	RETVAL=$?
