@@ -25,7 +25,7 @@ RETVAL=0
 start() {
         KIND="ABAQUSLM"
 	echo -n $"Starting $KIND services: "
-	$BIN/lmgrd -c $LM_LICENSE_FILE -l +/var/log/abaquslm.log
+	$BIN/lmgrd -c $LM_LICENSE_FILE -l +/var/log/abaqus-lm.log && success $KIND || failure $KIND
 	RETVAL=$?
 	echo
 	return $RETVAL
