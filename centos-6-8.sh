@@ -37,3 +37,8 @@ patch <<__PATCH__
  Section "Screen"
 __PATCH__
 
+### Install services
+cp abaqus-doc abaqus-lm /etc/init.d
+chkconfig abaqus-doc on
+chkconfig abaqus-lm on
+
