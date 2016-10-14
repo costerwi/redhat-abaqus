@@ -22,6 +22,18 @@ rpm -Uvh http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm
 yum install -y nvidia-detect
 yum install -y $(nvidia-detect)
 
+### Install services
+cp abaqus-doc abaqus-lm /etc/init.d
+chkconfig abaqus-doc on
+chkconfig abaqus-lm on
+
+### Copy launcher
+for d in /home/*/Desktop
+do
+    cp Abaqus\ CAE.desktop $d
+    chmod 777 $d/Abaqus\ CAE.desktop
+done
+
 ### Patch the configuration file so Abaqus CAE will work
 cd /etc/X11
 patch <<__PATCH__
@@ -36,16 +48,4 @@ patch <<__PATCH__
  
  Section "Screen"
 __PATCH__
-
-### Install services
-cp abaqus-doc abaqus-lm /etc/init.d
-chkconfig abaqus-doc on
-chkconfig abaqus-lm on
-
-### Copy launcher
-for d in /home/*/Desktop
-do
-    cp Abaqus\ CAE.desktop $d
-    chmod 777 $d/Abaqus\ CAE.desktop
-done
 
