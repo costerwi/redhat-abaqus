@@ -42,3 +42,10 @@ cp abaqus-doc abaqus-lm /etc/init.d
 chkconfig abaqus-doc on
 chkconfig abaqus-lm on
 
+### Copy launcher
+for d in /home/*/Desktop
+do
+    cp Abaqus\ CAE.desktop $d
+    chmod 777 $d/Abaqus\ CAE.desktop
+done
+

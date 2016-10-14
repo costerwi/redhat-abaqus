@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=/opt/CAE/SIMULIA/CAE/2016/linux_a64/CAEresources/graphic/icons/icoR_application.png
+Name[en_US]=Abaqus CAE
+Exec=/opt/CAE/Commands/abaqus cae
+Name=Abaqus CAE
+Icon=/opt/CAE/SIMULIA/CAE/2016/linux_a64/CAEresources/graphic/icons/icoR_application.png
